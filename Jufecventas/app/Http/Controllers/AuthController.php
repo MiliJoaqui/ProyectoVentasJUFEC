@@ -17,16 +17,15 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'usuario' => 'required',
             'password' => 'required',
-            'role' => 'required',
         ]);
 
         if (Auth::attempt($credentials)) {
             return redirect()->intended($this->redirectPath());
         }
 
-        return redirect()->back()->withErrors(['email' => 'Credenciales incorrectas']);
+        return redirect()->back()->withErrors(['usuario' => 'Credenciales incorrectas']);
     }
 
     // Método para cerrar sesión
@@ -39,10 +38,12 @@ class AuthController extends Controller
     // Método para obtener la ruta de redirección después del inicio de sesión
     protected function redirectPath()
     {
-        if (Auth::user()->role === 'vendedor') {
+        $user = Auth::user();
+
+        if ($user->role === 'vendedor') {
             return '/vendedor';
-        } elseif (Auth::user()->role === 'gerente') {
-            return '/gerencia';
+        } elseif ($user->role === 'gerente') {
+            return '/gerente';
         } else {
             return '/home';
         }
