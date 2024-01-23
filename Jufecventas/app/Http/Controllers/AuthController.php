@@ -18,9 +18,10 @@ class AuthController extends Controller
     {
         $credentials = $request->validate([
             'usuario' => 'required',
-            'password' => 'required',
+            'contrasena' => 'required',
         ]);
 
+        // Modificamos el intento de inicio de sesión para tener en cuenta el tipo de usuario
         if (Auth::attempt($credentials)) {
             return redirect()->intended($this->redirectPath());
         }
@@ -40,9 +41,10 @@ class AuthController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role === 'vendedor') {
+        // Cambiamos la comprobación de tipo de usuario
+        if ($user->tipo_usuario === 'vendedor') {
             return '/vendedor';
-        } elseif ($user->role === 'gerente') {
+        } elseif ($user->tipo_usuario === 'gerente') {
             return '/gerente';
         } else {
             return '/home';

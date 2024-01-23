@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    protected $table = 'usuarios'; // Indica el nombre de tu nueva tabla
+
     protected $fillable = [
         'usuario', 'password', 'role',
     ];

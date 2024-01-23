@@ -24,3 +24,9 @@ Auth::routes();
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// routes/web.php
+use App\Http\Controllers\UsuarioController;
+
+Route::get('/crear-usuario', [UsuarioController::class, 'create'])->name('crear-usuario.create');
+Route::post('/crear-usuario', [UsuarioController::class, 'store'])->name('crear-usuario.store');
